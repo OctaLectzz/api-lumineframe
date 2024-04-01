@@ -2,6 +2,11 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,4 +21,58 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+
+
+
+// ---AUTHENTICATION--- //
+Route::prefix('auth')->controller(AuthController::class)->group(function () {
+    Route::get('/profile', 'profile')->middleware('auth:sanctum');
+    Route::post('/register', 'register');
+    Route::post('/login', 'login');
+    Route::get('/logout', 'logout')->middleware('auth:sanctum');
+});
+
+// ---DASHBOARD--- //
+Route::prefix('dashboard')->middleware('auth:sanctum')->group(function () {
+    Route::get('/category', [CategoryController::class, 'index']);
+    Route::get('/tag', [TagController::class, 'index']);
+    Route::get('/photo', [PhotoController::class, 'index']);
+});
+
+// ---USER--- //
+Route::prefix('user')->controller(UserController::class)->middleware('auth:sanctum')->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{user}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{user}', 'update');
+    Route::delete('/{user}', 'destroy');
+});
+
+// ---CATEGORY--- //
+Route::prefix('category')->controller(CategoryController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{category}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{category}', 'update');
+    Route::delete('/{category}', 'destroy');
+});
+
+// ---TAG--- //
+Route::prefix('tag')->controller(TagController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{tag}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{tag}', 'update');
+    Route::delete('/{tag}', 'destroy');
+});
+
+// ---PHOTO--- //
+Route::prefix('photo')->controller(PhotoController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{photo}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{photo}', 'update');
+    Route::delete('/{photo}', 'destroy');
 });
