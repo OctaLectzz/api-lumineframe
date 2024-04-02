@@ -58,7 +58,7 @@ class AuthController extends Controller
         Auth::login($user);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Register Successfully',
             'data' => $data
         ]);
@@ -78,7 +78,7 @@ class AuthController extends Controller
             $data['role'] =  $user->role;
 
             return response()->json([
-                'status' => 'Success',
+                'status' => 'success',
                 'message' => 'Login Successfully',
                 'data' => $data
             ]);
@@ -95,7 +95,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Logout Successfully'
         ]);
     }

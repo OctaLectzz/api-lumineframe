@@ -19,13 +19,13 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|unique:categories|max:50',
-            'description' => 'nullable|string|mac:255'
+            'description' => 'nullable|string|max:255'
         ]);
 
         $category = Category::create($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Category Created Successfully',
             'data' => new CategoryResource($category)
         ]);
@@ -42,13 +42,13 @@ class CategoryController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:50',
-            'description' => 'nullable|string|mac:255'
+            'description' => 'nullable|string|max:255'
         ]);
 
         $category->update($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Category Edited Successfully',
             'data' => new CategoryResource($category)
         ]);
@@ -59,7 +59,7 @@ class CategoryController extends Controller
         $category->delete();
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Category Deleted Successfully'
         ]);
     }

@@ -2,11 +2,13 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TagController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TagController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\LikeController;
+use App\Http\Controllers\CollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,6 +41,8 @@ Route::prefix('dashboard')->middleware('auth:sanctum')->group(function () {
     Route::get('/category', [CategoryController::class, 'index']);
     Route::get('/tag', [TagController::class, 'index']);
     Route::get('/photo', [PhotoController::class, 'index']);
+    Route::get('/like', [LikeController::class, 'index']);
+    Route::get('/collection', [CollectionController::class, 'index']);
 });
 
 // ---USER--- //
@@ -75,4 +79,24 @@ Route::prefix('photo')->controller(PhotoController::class)->group(function () {
     Route::post('/', 'store');
     Route::put('/{photo}', 'update');
     Route::delete('/{photo}', 'destroy');
+});
+
+// ---LIKE--- //
+Route::prefix('like')->controller(LikeController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{like}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{like}', 'update');
+    Route::delete('/{like}', 'destroy');
+    Route::post('/{id}', 'like');
+    Route::delete('/{id}', 'unlike');
+});
+
+// ---COLLECTION--- //
+Route::prefix('collection')->controller(CollectionController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{collection}', 'show');
+    Route::post('/', 'store');
+    Route::put('/{collection}', 'update');
+    Route::delete('/{collection}', 'destroy');
 });

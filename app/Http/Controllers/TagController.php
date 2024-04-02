@@ -19,13 +19,13 @@ class TagController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|unique:tags|max:50',
-            'description' => 'nullable|string|mac:255'
+            'description' => 'nullable|string|max:255'
         ]);
 
         $tag = Tag::create($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Tag Created Successfully',
             'data' => new TagResource($tag)
         ]);
@@ -42,13 +42,13 @@ class TagController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|string|max:50',
-            'description' => 'nullable|string|mac:255'
+            'description' => 'nullable|string|max:255'
         ]);
 
         $tag->update($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Tag Edited Successfully',
             'data' => new TagResource($tag)
         ]);
@@ -59,7 +59,7 @@ class TagController extends Controller
         $tag->delete();
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Tag Deleted Successfully'
         ]);
     }

@@ -47,7 +47,7 @@ class UserController extends Controller
         $user = User::create($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'User Created Successfully',
             'data' => new UserResource($user)
         ]);
@@ -95,7 +95,7 @@ class UserController extends Controller
         $user->update($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'User Edited Successfully',
             'data' => new UserResource($user)
         ]);
@@ -110,7 +110,7 @@ class UserController extends Controller
         $user->delete();
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'User Deleted Successfully'
         ]);
     }

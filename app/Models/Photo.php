@@ -25,4 +25,12 @@ class Photo extends Model
     {
         return $this->hasMany(Tag::class, 'photo_tag', 'tag_id', 'photo_id');
     }
+    public function likes()
+    {
+        return $this->hasMany(Like::class);
+    }
+    public function collections()
+    {
+        return $this->hasMany(Collection::class, 'photo_collection', 'collection_id', 'photo_id');
+    }
 }

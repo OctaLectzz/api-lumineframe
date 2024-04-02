@@ -23,7 +23,7 @@ class PhotoController extends Controller
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,name',
+            'tags' => 'nullable|exists:tags,name'
         ]);
         $data['user_id'] = auth()->id();
 
@@ -38,7 +38,7 @@ class PhotoController extends Controller
         $photo->tags()->attach($request->tags);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Photo Created Successfully',
             'data' => new PhotoResource($photo)
         ]);
@@ -58,7 +58,7 @@ class PhotoController extends Controller
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'required|exists:tags,name',
+            'tags' => 'required|exists:tags,name'
         ]);
         $data['user_id'] = auth()->id();
 
@@ -77,7 +77,7 @@ class PhotoController extends Controller
         $photo->update($data);
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Photo Edited Successfully',
             'data' => new PhotoResource($photo)
         ]);
@@ -93,7 +93,7 @@ class PhotoController extends Controller
         $photo->delete();
 
         return response()->json([
-            'status' => 'Success',
+            'status' => 'success',
             'message' => 'Photo Deleted Successfully'
         ]);
     }
