@@ -37,7 +37,7 @@ Route::prefix('auth')->controller(AuthController::class)->group(function () {
 });
 
 // ---DASHBOARD--- //
-Route::prefix('dashboard')->middleware('auth:sanctum')->group(function () {
+Route::prefix('dashboard')->middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/category', [CategoryController::class, 'index']);
     Route::get('/tag', [TagController::class, 'index']);
     Route::get('/photo', [PhotoController::class, 'index']);
@@ -46,7 +46,7 @@ Route::prefix('dashboard')->middleware('auth:sanctum')->group(function () {
 });
 
 // ---USER--- //
-Route::prefix('user')->controller(UserController::class)->middleware('auth:sanctum')->group(function () {
+Route::prefix('user')->controller(UserController::class)->middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/', 'index');
     Route::get('/{user}', 'show');
     Route::post('/', 'store');
@@ -59,8 +59,8 @@ Route::prefix('category')->controller(CategoryController::class)->group(function
     Route::get('/', 'index');
     Route::get('/{category}', 'show');
     Route::post('/', 'store');
-    Route::put('/{category}', 'update');
-    Route::delete('/{category}', 'destroy');
+    Route::put('/{category}', 'update')->middleware(['auth:sanctum', 'admin']);
+    Route::delete('/{category}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
 
 // ---TAG--- //
@@ -68,8 +68,8 @@ Route::prefix('tag')->controller(TagController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{tag}', 'show');
     Route::post('/', 'store');
-    Route::put('/{tag}', 'update');
-    Route::delete('/{tag}', 'destroy');
+    Route::put('/{tag}', 'update')->middleware(['auth:sanctum', 'admin']);
+    Route::delete('/{tag}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
 
 // ---PHOTO--- //
@@ -86,8 +86,8 @@ Route::prefix('like')->controller(LikeController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{like}', 'show');
     Route::post('/', 'store');
-    Route::put('/{like}', 'update');
-    Route::delete('/{like}', 'destroy');
+    Route::put('/{like}', 'update')->middleware(['auth:sanctum', 'admin']);
+    Route::delete('/{like}', 'destroy')->middleware(['auth:sanctum', 'admin']);
     Route::post('/{id}', 'like');
     Route::delete('/{id}', 'unlike');
 });

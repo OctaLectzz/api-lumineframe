@@ -9,7 +9,7 @@ use App\Http\Resources\UserResource;
 
 class AuthController extends Controller
 {
-    public function profile(User $user)
+    public function profile()
     {
         $user = auth()->user();
 
