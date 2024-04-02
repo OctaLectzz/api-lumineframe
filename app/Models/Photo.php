@@ -31,6 +31,10 @@ class Photo extends Model
     }
     public function collections()
     {
-        return $this->hasMany(Collection::class, 'photo_collection', 'collection_id', 'photo_id');
+        return $this->hasMany(Collection::class);
+    }
+    public function collectionphoto()
+    {
+        return $this->hasMany(CollectionPhoto::class);
     }
 }

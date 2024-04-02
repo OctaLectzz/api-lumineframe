@@ -58,7 +58,7 @@ Route::prefix('user')->controller(UserController::class)->middleware(['auth:sanc
 Route::prefix('category')->controller(CategoryController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{category}', 'show');
-    Route::post('/', 'store');
+    Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{category}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{category}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
@@ -67,7 +67,7 @@ Route::prefix('category')->controller(CategoryController::class)->group(function
 Route::prefix('tag')->controller(TagController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{tag}', 'show');
-    Route::post('/', 'store');
+    Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{tag}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{tag}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
@@ -76,27 +76,27 @@ Route::prefix('tag')->controller(TagController::class)->group(function () {
 Route::prefix('photo')->controller(PhotoController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{photo}', 'show');
-    Route::post('/', 'store');
-    Route::put('/{photo}', 'update');
-    Route::delete('/{photo}', 'destroy');
+    Route::post('/', 'store')->middleware('auth:sanctum');
+    Route::put('/{photo}', 'update')->middleware('auth:sanctum');
+    Route::delete('/{photo}', 'destroy')->middleware('auth:sanctum');
 });
 
 // ---LIKE--- //
 Route::prefix('like')->controller(LikeController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{like}', 'show');
-    Route::post('/', 'store');
+    Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{like}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{like}', 'destroy')->middleware(['auth:sanctum', 'admin']);
-    Route::post('/{id}', 'like');
-    Route::delete('/{id}', 'unlike');
+    Route::post('/photo/{id}', 'like')->middleware('auth:sanctum');
+    Route::delete('/photo/{id}', 'unlike')->middleware('auth:sanctum');
 });
 
 // ---COLLECTION--- //
 Route::prefix('collection')->controller(CollectionController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{collection}', 'show');
-    Route::post('/', 'store');
-    Route::put('/{collection}', 'update');
-    Route::delete('/{collection}', 'destroy');
+    Route::post('/', 'store')->middleware('auth:sanctum');
+    Route::put('/{collection}', 'update')->middleware('auth:sanctum');
+    Route::delete('/{collection}', 'destroy')->middleware('auth:sanctum');
 });

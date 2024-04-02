@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Http\Resources\CollectionResource;
 
 class CollectionController extends Controller
@@ -18,14 +19,16 @@ class CollectionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'photos' => 'required|exists:photos,id',
             'name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255'
         ]);
         $data['user_id'] = auth()->id();
 
+        // Collection Code
+        $collectionCode = strtoupper(Str::random(8));
+        $data['collection_code'] = $collectionCode;
+
         $collection = Collection::create($data);
-        $collection->photos()->attach($request->photos);
 
         return response()->json([
             'status' => 'success',
@@ -44,13 +47,11 @@ class CollectionController extends Controller
     public function update(Request $request, Collection $collection)
     {
         $data = $request->validate([
-            'photos' => 'required|exists:photos,id',
             'name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255'
         ]);
         $data['user_id'] = auth()->id();
 
-        $collection->photos()->sync($request->photos);
         $collection->update($data);
 
         return response()->json([

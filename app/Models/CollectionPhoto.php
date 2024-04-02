@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Collection extends Model
+class CollectionPhoto extends Model
 {
     use HasFactory;
 
@@ -17,12 +17,12 @@ class Collection extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function photos()
+    public function photo()
     {
-        return $this->hasMany(Photo::class);
+        return $this->belongsTo(Photo::class);
     }
-    public function collectionphoto()
+    public function collection()
     {
-        return $this->hasMany(CollectionPhoto::class);
+        return $this->belongsTo(Collection::class);
     }
 }
