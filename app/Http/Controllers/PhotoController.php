@@ -25,6 +25,7 @@ class PhotoController extends Controller
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|exists:tags,name'
         ]);
+        $data['photo_number'] = str_pad(rand(1, 999999999), 9, '0', STR_PAD_LEFT);
         $data['user_id'] = auth()->id();
 
         // Image
@@ -44,8 +45,10 @@ class PhotoController extends Controller
         ]);
     }
 
-    public function show(Photo $photo)
+    public function show($photo_number)
     {
+        $photo = Photo::where('photo_number', $photo_number)->firstOrFail();
+
         return response()->json([
             'data' => new PhotoResource($photo)
         ]);

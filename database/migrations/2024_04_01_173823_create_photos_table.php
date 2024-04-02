@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('photos', function (Blueprint $table) {
             $table->id();
+            $table->string('photo_number')->uniqid();
             $table->unsignedBigInteger('user_id');
             $table->string('image');
             $table->string('title')->nullable();

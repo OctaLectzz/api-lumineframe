@@ -77,7 +77,7 @@ Route::prefix('tag')->controller(TagController::class)->group(function () {
 // ---PHOTO--- //
 Route::prefix('photo')->controller(PhotoController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/{photo}', 'show');
+    Route::get('/{photo:photo_number}', 'show');
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{photo}', 'update')->middleware('auth:sanctum');
     Route::delete('/{photo}', 'destroy')->middleware('auth:sanctum');
