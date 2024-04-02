@@ -14,6 +14,12 @@ class LikeResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
+            'photo_id' => $this->photo_id,
+            'user' => $this->user->name,
+            'photo' => $this->photo->title
+        ];
     }
 }

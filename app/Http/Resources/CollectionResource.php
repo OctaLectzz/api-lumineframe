@@ -14,6 +14,14 @@ class CollectionResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->id,
+            'collection_code' => $this->collection_code,
+            'user_id' => $this->user_id,
+            'user' => $this->user->name,
+            'name' => $this->name,
+            'description' => $this->description,
+            'photos' => $this->photos
+        ];
     }
 }

@@ -13,6 +13,10 @@ class Collection extends Model
         'id'
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
     public function photos()
     {
         return $this->hasMany(Photo::class, 'photo_collection', 'photo_id', 'collection_id');
