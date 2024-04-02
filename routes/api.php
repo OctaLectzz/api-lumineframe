@@ -2,13 +2,14 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TagController;
-use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LikeController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\PhotoController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CollectionPhotoController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,7 @@ Route::prefix('dashboard')->middleware(['auth:sanctum', 'admin'])->group(functio
     Route::get('/photo', [PhotoController::class, 'index']);
     Route::get('/like', [LikeController::class, 'index']);
     Route::get('/collection', [CollectionController::class, 'index']);
+    Route::get('/collectionphoto', [CollectionPhotoController::class, 'index']);
 });
 
 // ---USER--- //
@@ -99,4 +101,13 @@ Route::prefix('collection')->controller(CollectionController::class)->group(func
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{collection}', 'update')->middleware('auth:sanctum');
     Route::delete('/{collection}', 'destroy')->middleware('auth:sanctum');
+});
+
+// ---COLLECTIONPHOTO--- //
+Route::prefix('collectionphoto')->controller(CollectionPhotoController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{collectionphoto}', 'show');
+    Route::post('/', 'store')->middleware('auth:sanctum');
+    Route::put('/{collectionphoto}', 'update')->middleware('auth:sanctum');
+    Route::delete('/{collectionphoto}', 'destroy')->middleware('auth:sanctum');
 });
