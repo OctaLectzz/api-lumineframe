@@ -22,6 +22,7 @@ class AuthController extends Controller
     {
         $request->validate([
             'avatar' => 'nullable',
+            'username' => 'required|string|max:10|unique:users,username',
             'first_name' => 'required|string|max:50',
             'last_name' => 'nullable|string|max:50',
             'email' => 'required|string|email|unique:users,email|max:100',
@@ -50,6 +51,7 @@ class AuthController extends Controller
         $token =  $user->createToken('luminaframe')->plainTextToken;
         $data = [
             'token' => $token,
+            'username' => $user->username,
             'name' => $user->first_name . $user->last_name,
             'email' => $user->email,
             'role' => $user->role
@@ -74,6 +76,7 @@ class AuthController extends Controller
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = User::where('email', $request->email)->first();
             $data['token'] =  $user->createToken('luminaframe')->plainTextToken;
+            $data['username'] =  $user->username;
             $data['name'] =  $user->name;
             $data['role'] =  $user->role;
 

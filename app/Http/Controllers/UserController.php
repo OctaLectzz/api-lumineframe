@@ -20,8 +20,9 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'avatar' => 'nullable',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'nullable|string|max:100',
+            'username' => 'required|string|max:10|unique:users,username',
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'nullable|string|max:20',
             'email' => 'required|string|email|unique:users,email|max:100',
             'password' => 'required|string|min:8',
             'passwordConfirmation' => 'required|same:password',
@@ -35,7 +36,7 @@ class UserController extends Controller
 
         // Avatar
         if ($request->hasFile('avatar')) {
-            $avatarName = time() . '-' . auth()->id() . '_' . $request->avatar->getClientOriginalExtension();
+            $avatarName = time() . '-' . auth()->user()->username . '_' . $request->avatar->getClientOriginalExtension();
             $request->avatar->move(public_path('avatars'), $avatarName);
             $data['avatar'] = $avatarName;
         }
@@ -64,8 +65,9 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'avatar' => 'nullable',
-            'first_name' => 'required|string|max:100',
-            'last_name' => 'nullable|string|max:100',
+            'username' => 'required|string|max:10|unique:users,username',
+            'first_name' => 'required|string|max:20',
+            'last_name' => 'nullable|string|max:20',
             'email' => 'required|string|email|max:100',
             'password' => 'required|string|min:8',
             'passwordConfirmation' => 'required|same:password',
@@ -83,7 +85,7 @@ class UserController extends Controller
                 unlink(public_path('avatars/' . $user->avatar));
             }
 
-            $avatarName = time() . '-' . auth()->id() . '_' . $request->avatar->getClientOriginalExtension();
+            $avatarName = time() . '-' . auth()->user()->username . '_' . $request->avatar->getClientOriginalExtension();
             $request->avatar->move(public_path('avatars'), $avatarName);
             $data['avatar'] = $avatarName;
         }
