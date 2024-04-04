@@ -22,6 +22,7 @@ class User extends Authenticatable
     ];
 
     protected $attributes = [
+        'avatar' => 'user-profile-default.jpg',
         'role' => 'Member',
         'status' => 1
     ];

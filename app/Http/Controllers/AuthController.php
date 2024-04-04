@@ -22,12 +22,12 @@ class AuthController extends Controller
     {
         $request->validate([
             'avatar' => 'nullable',
-            'username' => 'required|string|max:10|unique:users,username',
+            'username' => 'required|string|min:3|max:10|unique:users,username',
             'first_name' => 'required|string|max:50',
             'last_name' => 'nullable|string|max:50',
             'email' => 'required|string|email|unique:users,email|max:100',
             'password' => 'required|min:8',
-            'repassword' => 'required|same:password',
+            'passwordconfirmation' => 'required|same:password',
             'birthday' => 'nullable|date',
             'gender' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:15',
