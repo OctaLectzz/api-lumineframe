@@ -48,7 +48,7 @@ class AuthController extends Controller
 
         $user = User::create($input);
 
-        $token =  $user->createToken('luminaframe')->plainTextToken;
+        $token =  $user->createToken('lumineframe')->plainTextToken;
         $data = [
             'token' => $token,
             'username' => $user->username,
@@ -75,7 +75,7 @@ class AuthController extends Controller
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
             $user = User::where('email', $request->email)->first();
-            $data['token'] =  $user->createToken('luminaframe')->plainTextToken;
+            $data['token'] =  $user->createToken('lumineframe')->plainTextToken;
             $data['username'] =  $user->username;
             $data['name'] =  $user->name;
             $data['role'] =  $user->role;
