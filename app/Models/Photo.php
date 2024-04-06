@@ -23,7 +23,7 @@ class Photo extends Model
     }
     public function tags()
     {
-        return $this->hasMany(Tag::class, 'photo_tag', 'tag_id', 'photo_id');
+        return $this->belongsToMany(Tag::class, 'photo_tag');
     }
     public function likes()
     {

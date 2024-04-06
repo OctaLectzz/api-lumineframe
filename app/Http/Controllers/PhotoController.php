@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Tag;
 use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
@@ -21,22 +22,35 @@ class PhotoController extends Controller
         $data = $request->validate([
             'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'nullable|string|max:255',
-            'description' => 'nullable|string',
+            'description' => 'nullable|string|max:255',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'nullable|exists:tags,name'
+            'tags' => 'nullable|array',
+            'tags.*' => 'nullable|string|max:255'
         ]);
         $data['photo_number'] = str_pad(rand(1, 999999999), 9, '0', STR_PAD_LEFT);
         $data['user_id'] = auth()->id();
 
         // Image
         if ($request->hasFile('image')) {
-            $imageName = time() . '-' . auth()->user()->username . '_' . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . auth()->user()->username . '_' . $data['photo_number'] . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images'), $imageName);
             $data['image'] = $imageName;
         }
 
-        $photo = Photo::create($data);
-        $photo->tags()->attach($request->tags);
+        if (!empty($data['tags'])) {
+            $tagsToAttach = [];
+
+            // Periksa setiap tag
+            foreach ($data['tags'] as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tagsToAttach[] = $tag->id;
+            }
+
+            $photo = Photo::create($data);
+            $photo->tags()->attach($tagsToAttach);
+        } else {
+            $photo = Photo::create($data);
+        }
 
         return response()->json([
             'status' => 'success',

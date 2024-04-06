@@ -18,7 +18,7 @@ class TagController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|unique:tags|max:50',
+            'name' => 'required|string|unique:tags|max:20',
             'description' => 'nullable|string|max:255'
         ]);
 
@@ -41,7 +41,7 @@ class TagController extends Controller
     public function update(Request $request, Tag $tag)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:20',
             'description' => 'nullable|string|max:255'
         ]);
 

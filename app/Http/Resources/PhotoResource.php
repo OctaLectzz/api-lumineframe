@@ -18,15 +18,15 @@ class PhotoResource extends JsonResource
             'id' => $this->id,
             'photo_number' => $this->photo_number,
             'user_id' => $this->user_id,
-            'category_id' => $this->category_id,
+            'category_id' => $this->category_id ? $this->category_id : null,
             'user' => $this->user->name,
             'image' => $this->image,
             'title' => $this->title,
             'description' => $this->description,
-            'category' => $this->category->name,
+            'category' => $this->category_id ? $this->category->name : '',
             'tags' => $this->tags,
             'likes' => $this->likes,
-            'collections' => $this->collections
+            // 'collections' => $this->collections ? $this->collections : ''
         ];
     }
 }
