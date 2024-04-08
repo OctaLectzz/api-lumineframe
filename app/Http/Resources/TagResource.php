@@ -18,7 +18,7 @@ class TagResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'description' => $this->description ? $this->description : '',
-            'photos' => $this->photos
+            'photos' => $this->photos ? $this->photos : null
         ];
     }
 }

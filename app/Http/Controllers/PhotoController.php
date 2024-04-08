@@ -20,8 +20,8 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
-            'title' => 'nullable|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
+            'title' => 'nullable|string|max:20',
             'description' => 'nullable|string|max:255',
             'category_id' => 'nullable|exists:categories,id',
             'tags' => 'nullable|array',
