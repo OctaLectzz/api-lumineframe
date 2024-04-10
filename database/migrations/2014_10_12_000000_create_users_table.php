@@ -21,8 +21,10 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('role');
+            $table->string('about')->nullable();
+            $table->string('pronouns')->nullable();
             $table->date('birthday')->nullable();
-            $table->Enum('gender', ['Man', 'Woman'])->nullable();
+            $table->Enum('gender', ['man', 'woman'])->nullable();
             $table->string('phone')->nullable();
             $table->string('url')->nullable();
             $table->string('address')->nullable();

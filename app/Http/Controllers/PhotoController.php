@@ -37,10 +37,10 @@ class PhotoController extends Controller
             $data['image'] = $imageName;
         }
 
+        // Tags
         if (!empty($data['tags'])) {
             $tagsToAttach = [];
 
-            // Periksa setiap tag
             foreach ($data['tags'] as $tagName) {
                 $tag = Tag::firstOrCreate(['name' => $tagName]);
                 $tagsToAttach[] = $tag->id;
@@ -75,7 +75,8 @@ class PhotoController extends Controller
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
-            'tags' => 'required|exists:tags,name'
+            'tags' => 'nullable|array',
+            'tags.*' => 'nullable|string|max:255'
         ]);
         $data['user_id'] = auth()->id();
 
@@ -90,8 +91,20 @@ class PhotoController extends Controller
             $data['image'] = $imageName;
         }
 
-        $photo->tags()->sync($request->tags);
-        $photo->update($data);
+        // Tags
+        if (!empty($data['tags'])) {
+            $tagsToAttach = [];
+
+            foreach ($data['tags'] as $tagName) {
+                $tag = Tag::firstOrCreate(['name' => $tagName]);
+                $tagsToAttach[] = $tag->id;
+            }
+
+            $photo->tags()->sync($tagsToAttach);
+            $photo->update($data);
+        } else {
+            $photo->update($data);
+        }
 
         return response()->json([
             'status' => 'success',
