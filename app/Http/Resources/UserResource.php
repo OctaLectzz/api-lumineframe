@@ -30,7 +30,6 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'url' => $this->url,
             'address' => $this->address,
-            'photos' => $this->photos ? PhotoResource::collection($this->photos) : null,
             'likes' => $this->likes ? LikeResource::collection($this->likes) : null,
             'status' => $this->status === 1 ? true : false
         ];

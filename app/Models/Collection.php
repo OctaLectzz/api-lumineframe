@@ -19,7 +19,7 @@ class Collection extends Model
     }
     public function photos()
     {
-        return $this->hasMany(Photo::class);
+        return $this->belongsToMany(Photo::class, 'collection_photo');
     }
     public function collectionphoto()
     {

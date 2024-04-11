@@ -20,13 +20,12 @@ class PhotoResource extends JsonResource
             'user_id' => $this->user_id,
             'category_id' => $this->category_id ? $this->category_id : null,
             'image' => $this->image,
+            'user' => new UserResource($this->user),
             'title' => $this->title,
             'description' => $this->description,
-            'category' => $this->category_id ? new CategoryResource($this->category) : '',
-            'user' => new UserResource($this->user),
-            'tags' => $this->tags ? TagResource::collection($this->tags) : null,
-            'likes' => $this->likes ? LikeResource::collection($this->likes) : null,
-            'collections' => $this->collections ? CollectionResource ::collection($this->collections) : null
+            'category' => $this->category_id ? $this->category->name : '',
+            'likes' => $this->likes ? $this->likes : null,
+            'tags' => $this->tags ? TagResource::collection($this->tags) : null
         ];
     }
 }
