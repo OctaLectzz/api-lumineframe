@@ -18,10 +18,10 @@ class CollectionResource extends JsonResource
             'id' => $this->id,
             'collection_code' => $this->collection_code,
             'user_id' => $this->user_id,
-            'user' => $this->user->name,
             'name' => $this->name,
             'description' => $this->description,
-            'photos' => $this->photos
+            'user' => new UserResource($this->user),
+            'photos' => $this->photos ? PhotoResource::collection($this->photos) : null
         ];
     }
 }

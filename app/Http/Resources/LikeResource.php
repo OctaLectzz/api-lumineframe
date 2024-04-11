@@ -18,8 +18,8 @@ class LikeResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'photo_id' => $this->photo_id,
-            'user' => $this->user->name,
-            'photo' => $this->photo->title
+            'user' => new UserResource($this->user),
+            'photo' => new PhotoResource($this->photo)
         ];
     }
 }

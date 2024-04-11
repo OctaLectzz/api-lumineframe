@@ -19,9 +19,9 @@ class CollectionPhotoResource extends JsonResource
             'user_id' => $this->user_id,
             'photo_id' => $this->photo_id,
             'collection_id' => $this->collection_id,
-            'user' => $this->user->name,
-            'photo' => $this->photo->image,
-            'collection' => $this->collection->name
+            'user' => new UserResource($this->user),
+            'photo' => new PhotoResource($this->photo),
+            'collection' => new CollectionResource($this->collection),
         ];
     }
 }

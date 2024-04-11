@@ -22,11 +22,11 @@ class PhotoResource extends JsonResource
             'image' => $this->image,
             'title' => $this->title,
             'description' => $this->description,
-            'category' => $this->category_id ? $this->category->name : '',
-            'user' => $this->user ? new UserResource($this->user) : null,
+            'category' => $this->category_id ? new CategoryResource($this->category) : '',
+            'user' => new UserResource($this->user),
             'tags' => $this->tags ? TagResource::collection($this->tags) : null,
-            'likes' => $this->likes,
-            // 'collections' => $this->collections ? $this->collections : ''
+            'likes' => $this->likes ? LikeResource::collection($this->likes) : null,
+            'collections' => $this->collections ? CollectionResource ::collection($this->collections) : null
         ];
     }
 }
