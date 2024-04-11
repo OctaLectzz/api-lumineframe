@@ -50,7 +50,7 @@ Route::prefix('dashboard')->middleware(['auth:sanctum', 'admin'])->group(functio
 // ---USER--- //
 Route::prefix('user')->controller(UserController::class)->middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/', 'index');
-    Route::get('/{user}', 'show');
+    Route::get('/{user:username}', 'show');
     Route::post('/', 'store');
     Route::put('/{user}', 'update');
     Route::delete('/{user}', 'destroy');

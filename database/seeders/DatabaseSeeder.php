@@ -20,5 +20,8 @@ class DatabaseSeeder extends Seeder
 
         // Tag Seeder
         $this->call(TagSeeder::class);
+
+        // Photo Seeder
+        $this->call(PhotoSeeder::class);
     }
 }
