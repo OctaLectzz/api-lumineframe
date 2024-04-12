@@ -31,7 +31,7 @@ class UserResource extends JsonResource
             'url' => $this->url,
             'address' => $this->address,
             'likes' => $this->likes ? LikeResource::collection($this->likes) : null,
-            'status' => $this->status === 1 ? true : false
+            'status' => $this->status == 1 ? true : false
         ];
     }
 }

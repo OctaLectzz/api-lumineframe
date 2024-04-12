@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
-use App\Models\Photo;
 use Illuminate\Http\Request;
 use App\Http\Resources\LikeResource;
 
@@ -65,22 +64,37 @@ class LikeController extends Controller
         ]);
     }
 
+    public function userlike()
+    {
+        $likes = Like::where('user_id', auth()->id())->get();
+
+        return LikeResource::collection($likes);
+    }
+
     public function like($id)
     {
-        $photo = Photo::findOrFail($id);
+        // Like Check
+        $existingLike = Like::where('user_id', auth()->id())->where('photo_id', $id)->first();
+        if ($existingLike) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You have already Liked this Photo'
+            ], 403);
+        }
 
-        $like = $photo->likes()->create([
+        $like = Like::create([
             'user_id' => auth()->id(),
+            'photo_id' => $id,
         ]);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Liked Successfully',
+            'message' => 'Photo Liked Successfully',
             'data' => new LikeResource($like)
         ]);
     }
 
-    public function unlike($id)
+    public function dislike($id)
     {
         $like = Like::where([
             'user_id' => auth()->id(),
@@ -91,7 +105,7 @@ class LikeController extends Controller
 
         return response()->json([
             'status' => 'success',
-            'message' => 'Unliked Successfully',
+            'message' => 'Photo Unliked Successfully',
             'data' => new LikeResource($like)
         ]);
     }

@@ -90,8 +90,9 @@ Route::prefix('like')->controller(LikeController::class)->group(function () {
     Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{like}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{like}', 'destroy')->middleware(['auth:sanctum', 'admin']);
-    Route::post('/photo/{id}', 'like')->middleware('auth:sanctum');
-    Route::delete('/photo/{id}', 'unlike')->middleware('auth:sanctum');
+    Route::get('/user/{id}', 'userlike')->middleware('auth:sanctum');
+    Route::put('/photo/{id}', 'like')->middleware('auth:sanctum');
+    Route::delete('/photo/{id}', 'dislike')->middleware('auth:sanctum');
 });
 
 // ---COLLECTION--- //
