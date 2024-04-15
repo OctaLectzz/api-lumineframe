@@ -7,6 +7,7 @@ use App\Models\Photo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use App\Http\Resources\PhotoResource;
+use Illuminate\Support\Facades\Response;
 
 class PhotoController extends Controller
 {
@@ -126,5 +127,22 @@ class PhotoController extends Controller
             'status' => 'success',
             'message' => 'Photo Deleted Successfully'
         ]);
+    }
+
+    public function download($imageFilename)
+    {
+        $filePath = public_path('images/' . $imageFilename);
+
+        if (file_exists($filePath)) {
+            $fileMimeType = mime_content_type($filePath);
+
+            $headers = [
+                'Content-Type' => $fileMimeType,
+            ];
+
+            return Response::download($filePath, $imageFilename, $headers);
+        } else {
+            abort(404);
+        }
     }
 }

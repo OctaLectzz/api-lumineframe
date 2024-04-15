@@ -81,6 +81,7 @@ Route::prefix('photo')->controller(PhotoController::class)->group(function () {
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{photo}', 'update')->middleware('auth:sanctum');
     Route::delete('/{photo}', 'destroy')->middleware('auth:sanctum');
+    Route::get('/download/{imageFileName}', 'download');
 });
 
 // ---LIKE--- //
