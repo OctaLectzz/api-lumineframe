@@ -10,6 +10,7 @@ use App\Http\Controllers\PhotoController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\CollectionPhotoController;
+use App\Http\Controllers\CommentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,17 +44,18 @@ Route::prefix('dashboard')->middleware(['auth:sanctum', 'admin'])->group(functio
     Route::get('/tag', [TagController::class, 'index']);
     Route::get('/photo', [PhotoController::class, 'index']);
     Route::get('/like', [LikeController::class, 'index']);
+    Route::get('/comment', [CommentController::class, 'index']);
     Route::get('/collection', [CollectionController::class, 'index']);
     Route::get('/collectionphoto', [CollectionPhotoController::class, 'index']);
 });
 
 // ---USER--- //
-Route::prefix('user')->controller(UserController::class)->middleware(['auth:sanctum', 'admin'])->group(function () {
+Route::prefix('user')->controller(UserController::class)->group(function () {
     Route::get('/', 'index');
     Route::get('/{user:username}', 'show');
-    Route::post('/', 'store');
+    Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{user}', 'update');
-    Route::delete('/{user}', 'destroy');
+    Route::delete('/{user}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
 
 // ---CATEGORY--- //
@@ -94,6 +96,15 @@ Route::prefix('like')->controller(LikeController::class)->group(function () {
     Route::get('/user/{id}', 'userlike')->middleware('auth:sanctum');
     Route::put('/photo/{id}', 'like')->middleware('auth:sanctum');
     Route::delete('/photo/{id}', 'dislike')->middleware('auth:sanctum');
+});
+
+// ---COMMENT--- //
+Route::prefix('comment')->controller(CommentController::class)->group(function () {
+    Route::get('/', 'index');
+    Route::get('/{comment}', 'show');
+    Route::post('/', 'store')->middleware('auth:sanctum');
+    Route::put('/{comment}', 'update')->middleware('auth:sanctum');
+    Route::delete('/{comment}', 'destroy')->middleware('auth:sanctum');
 });
 
 // ---COLLECTION--- //

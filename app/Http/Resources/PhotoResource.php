@@ -25,6 +25,7 @@ class PhotoResource extends JsonResource
             'description' => $this->description,
             'category' => $this->category_id ? $this->category->name : '',
             'likes' => $this->likes ? $this->likes : null,
+            'comments' => $this->comments ? CommentResource::collection($this->comments) : null,
             'tags' => $this->tags ? TagResource::collection($this->tags) : null
         ];
     }

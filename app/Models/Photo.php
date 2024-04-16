@@ -29,6 +29,10 @@ class Photo extends Model
     {
         return $this->hasMany(Like::class);
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
     public function collections()
     {
         return $this->belongsToMany(Collection::class, 'collection_photo');
