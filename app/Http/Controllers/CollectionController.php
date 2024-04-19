@@ -19,7 +19,7 @@ class CollectionController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:20',
             'description' => 'nullable|string|max:255'
         ]);
         $data['user_id'] = auth()->id();
@@ -47,7 +47,7 @@ class CollectionController extends Controller
     public function update(Request $request, Collection $collection)
     {
         $data = $request->validate([
-            'name' => 'required|string|max:50',
+            'name' => 'required|string|max:20',
             'description' => 'nullable|string|max:255'
         ]);
         $data['user_id'] = auth()->id();
@@ -70,5 +70,12 @@ class CollectionController extends Controller
             'status' => 'success',
             'message' => 'Collection Deleted Successfully'
         ]);
+    }
+
+    public function usercollection()
+    {
+        $collections = Collection::where('user_id', auth()->id())->get();
+
+        return CollectionResource::collection($collections);
     }
 }

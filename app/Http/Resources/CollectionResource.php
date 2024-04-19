@@ -17,10 +17,9 @@ class CollectionResource extends JsonResource
         return [
             'id' => $this->id,
             'collection_code' => $this->collection_code,
-            'user_id' => $this->user_id,
             'name' => $this->name,
             'description' => $this->description,
-            'user' => new UserResource($this->user),
+            'user' => new ProfileResource($this->user),
             'photos' => $this->photos ? PhotoResource::collection($this->photos) : null
         ];
     }

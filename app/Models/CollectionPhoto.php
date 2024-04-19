@@ -9,6 +9,8 @@ class CollectionPhoto extends Model
 {
     use HasFactory;
 
+    protected $table = 'collection_photo';
+
     protected $guarded = [
         'id'
     ];

@@ -17,11 +17,8 @@ class CommentResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user_id' => $this->user_id,
-            'photo_id' => $this->photo_id,
-            'avatar' => $this->user->avatar,
-            'name' => $this->user->first_name . ' ' . $this->user->last_name,
             'content' => $this->content,
+            'user' => new ProfileResource($this->user),
             'created_at' => Carbon::parse($this->created_at)->diffForHumans()
         ];
     }

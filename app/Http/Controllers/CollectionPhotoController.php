@@ -17,6 +17,15 @@ class CollectionPhotoController extends Controller
 
     public function store(Request $request)
     {
+        // Save Check
+        $existingSave = CollectionPhoto::where('user_id', auth()->id())->where('photo_id', $request->photo_id)->where('collection_id', $request->collection_id)->first();
+        if ($existingSave) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'You have already Saved this Photo'
+            ], 403);
+        }
+
         $data = $request->validate([
             'photo_id' => 'required|integer|exists:photos,id',
             'collection_id' => 'required|integer|exists:collections,id'
@@ -64,5 +73,12 @@ class CollectionPhotoController extends Controller
             'status' => 'success',
             'message' => 'Collection Photo Deleted Successfully'
         ]);
+    }
+
+    public function usersave()
+    {
+        $saves = CollectionPhoto::where('user_id', auth()->id())->get();
+
+        return CollectionPhotoResource::collection($saves);
     }
 }

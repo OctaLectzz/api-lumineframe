@@ -114,6 +114,7 @@ Route::prefix('collection')->controller(CollectionController::class)->group(func
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{collection}', 'update')->middleware('auth:sanctum');
     Route::delete('/{collection}', 'destroy')->middleware('auth:sanctum');
+    Route::get('/user/{id}', 'usercollection')->middleware('auth:sanctum');
 });
 
 // ---COLLECTIONPHOTO--- //
@@ -123,4 +124,5 @@ Route::prefix('collectionphoto')->controller(CollectionPhotoController::class)->
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{collectionphoto}', 'update')->middleware('auth:sanctum');
     Route::delete('/{collectionphoto}', 'destroy')->middleware('auth:sanctum');
+    Route::get('/user/{id}', 'usersave')->middleware('auth:sanctum');
 });
