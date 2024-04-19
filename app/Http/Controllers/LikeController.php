@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Like;
+use App\Models\Photo;
 use Illuminate\Http\Request;
 use App\Http\Resources\LikeResource;
+use App\Http\Resources\PhotoResource;
 
 class LikeController extends Controller
 {
@@ -66,9 +68,14 @@ class LikeController extends Controller
 
     public function userlike()
     {
-        $likes = Like::where('user_id', auth()->id())->get();
+        $likes = Like::with('photo')->where('user_id', auth()->id())->get();
 
-        return LikeResource::collection($likes);
+        $photos = [];
+        foreach ($likes as $like) {
+            $photos[] = $like->photo;
+        }
+
+        return PhotoResource::collection($photos);
     }
 
     public function like($id)

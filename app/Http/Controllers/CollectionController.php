@@ -71,11 +71,4 @@ class CollectionController extends Controller
             'message' => 'Collection Deleted Successfully'
         ]);
     }
-
-    public function usercollection()
-    {
-        $collections = Collection::where('user_id', auth()->id())->get();
-
-        return CollectionResource::collection($collections);
-    }
 }

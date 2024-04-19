@@ -114,7 +114,6 @@ Route::prefix('collection')->controller(CollectionController::class)->group(func
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{collection}', 'update')->middleware('auth:sanctum');
     Route::delete('/{collection}', 'destroy')->middleware('auth:sanctum');
-    Route::get('/user/{id}', 'usercollection')->middleware('auth:sanctum');
 });
 
 // ---COLLECTIONPHOTO--- //
