@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Resources\CategoryResource;
 
@@ -21,6 +22,7 @@ class CategoryController extends Controller
             'name' => 'required|string|unique:categories|max:50',
             'description' => 'nullable|string|max:255'
         ]);
+        $data['category_code'] = Str::random(10);
 
         $category = Category::create($data);
 
