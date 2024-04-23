@@ -16,6 +16,8 @@ class CategoryResource extends JsonResource
     {
         return [
             'id' => $this->id,
+            'category_code' => $this->category_code,
+            'image' => $this->image,
             'name' => $this->name,
             'description' => $this->description ? $this->description : '',
             'photos' => $this->photos ? PhotoResource::collection($this->photos) : null

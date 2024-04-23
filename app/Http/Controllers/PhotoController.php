@@ -72,7 +72,6 @@ class PhotoController extends Controller
     public function update(Request $request, Photo $photo)
     {
         $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             'title' => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'category_id' => 'nullable|exists:categories,id',
