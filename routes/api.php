@@ -55,6 +55,7 @@ Route::prefix('user')->controller(UserController::class)->group(function () {
     Route::get('/{user:username}', 'show');
     Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{user}', 'update');
+    Route::patch('/avatar/{user}', 'updateavatar');
     Route::delete('/{user}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
 

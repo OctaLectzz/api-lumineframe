@@ -20,9 +20,9 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'avatar' => 'nullable',
-            'username' => 'required|string|max:10|unique:users,username',
-            'first_name' => 'required|string|max:20',
-            'last_name' => 'nullable|string|max:20',
+            'username' => 'required|string|max:15|unique:users,username',
+            'first_name' => 'required|string|max:15',
+            'last_name' => 'nullable|string|max:15',
             'email' => 'required|string|email|unique:users,email|max:100',
             'password' => 'required|string|min:8',
             'passwordConfirmation' => 'required|same:password',
@@ -68,13 +68,10 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $data = $request->validate([
-            'avatar' => 'nullable',
-            'username' => 'required|string|max:10|unique:users,username',
-            'first_name' => 'required|string|max:20',
-            'last_name' => 'nullable|string|max:20',
+            'username' => 'required|string|max:15',
+            'first_name' => 'required|string|max:15',
+            'last_name' => 'nullable|string|max:15',
             'email' => 'required|string|email|max:100',
-            'password' => 'required|string|min:8',
-            'passwordConfirmation' => 'required|same:password',
             'about' => 'nullable|string|max:100',
             'pronouns' => 'nullable|string|max:20',
             'birthday' => 'nullable|date',
@@ -85,7 +82,25 @@ class UserController extends Controller
             'status' => 'required'
         ]);
 
-        // Avatar
+        // Status
+        $status = ($request->status === true) ? 1 : 0;
+        $data['status'] = $status;
+
+        $user->update($data);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User Edited Successfully',
+            'data' => new UserResource($user)
+        ]);
+    }
+
+    public function updateavatar(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'avatar' => 'required|image'
+        ]);
+
         if ($request->hasFile('avatar')) {
             if ($user->avatar && file_exists(public_path('avatars/' . $user->avatar))) {
                 unlink(public_path('avatars/' . $user->avatar));
@@ -96,15 +111,11 @@ class UserController extends Controller
             $data['avatar'] = $avatarName;
         }
 
-        // Status
-        $status = ($request->status === true) ? 1 : 0;
-        $data['status'] = $status;
-
         $user->update($data);
 
         return response()->json([
             'status' => 'success',
-            'message' => 'User Edited Successfully',
+            'message' => 'User Avatar Edited Successfully',
             'data' => new UserResource($user)
         ]);
     }
