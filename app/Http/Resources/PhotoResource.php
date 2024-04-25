@@ -22,7 +22,7 @@ class PhotoResource extends JsonResource
             'description' => $this->description,
             'user' => new ProfileResource($this->user),
             'category' => $this->category_id ? $this->category->name : '',
-            'tags' => $this->tags ? TagResource::collection($this->tags) : null,
+            'tags' => $this->tags ? $this->tags : null,
             'likes' => $this->likes ? $this->likes : null,
             'comments' => $this->comments ? CommentResource::collection($this->comments) : null
         ];

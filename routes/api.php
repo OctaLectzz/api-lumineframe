@@ -61,7 +61,7 @@ Route::prefix('user')->controller(UserController::class)->group(function () {
 // ---CATEGORY--- //
 Route::prefix('category')->controller(CategoryController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/{category}', 'show');
+    Route::get('/{category:category_code}', 'show');
     Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{category}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{category}', 'destroy')->middleware(['auth:sanctum', 'admin']);
@@ -70,7 +70,7 @@ Route::prefix('category')->controller(CategoryController::class)->group(function
 // ---TAG--- //
 Route::prefix('tag')->controller(TagController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/{tag}', 'show');
+    Route::get('/{tag:name}', 'show');
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{tag}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{tag}', 'destroy')->middleware(['auth:sanctum', 'admin']);
@@ -110,7 +110,7 @@ Route::prefix('comment')->controller(CommentController::class)->group(function (
 // ---COLLECTION--- //
 Route::prefix('collection')->controller(CollectionController::class)->group(function () {
     Route::get('/', 'index');
-    Route::get('/{collection}', 'show');
+    Route::get('/{collection:collection_code}', 'show');
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{collection}', 'update')->middleware('auth:sanctum');
     Route::delete('/{collection}', 'destroy')->middleware('auth:sanctum');
