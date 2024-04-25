@@ -26,14 +26,15 @@ class UserController extends Controller
             'email' => 'required|string|email|unique:users,email|max:100',
             'password' => 'required|string|min:8',
             'passwordConfirmation' => 'required|same:password',
-            'about' => 'nullable|string|max:100',
+            'phone' => 'nullable|string|max:15',
+            'role' => 'nullable|string',
             'pronouns' => 'nullable|string|max:20',
+            'url' => 'nullable|string|max:255',
             'birthday' => 'nullable|date',
             'gender' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:15',
-            'url' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
-            'status' => 'required'
+            'about' => 'nullable|string|max:100',
+            'address' => 'nullable|string|max:255'
         ]);
 
         // Avatar
@@ -42,10 +43,6 @@ class UserController extends Controller
             $request->avatar->move(public_path('avatars'), $avatarName);
             $data['avatar'] = $avatarName;
         }
-
-        // Status
-        $status = ($request->status === true) ? 1 : 0;
-        $data['status'] = $status;
 
         $user = User::create($data);
 
@@ -72,13 +69,14 @@ class UserController extends Controller
             'first_name' => 'required|string|max:15',
             'last_name' => 'nullable|string|max:15',
             'email' => 'required|string|email|max:100',
-            'about' => 'nullable|string|max:100',
+            'phone' => 'nullable|string|max:15',
+            'role' => 'nullable|string',
             'pronouns' => 'nullable|string|max:20',
+            'url' => 'nullable|string|max:255',
             'birthday' => 'nullable|date',
             'gender' => 'nullable|string|max:255',
-            'phone' => 'nullable|string|max:15',
-            'url' => 'nullable|string|max:255',
             'address' => 'nullable|string|max:255',
+            'about' => 'nullable|string|max:100',
             'status' => 'required'
         ]);
 
@@ -122,10 +120,6 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if ($user->avatar && File::exists(public_path('avatars/' . $user->avatar))) {
-            File::delete(public_path('avatars/' . $user->avatar));
-        }
-
         $user->delete();
 
         return response()->json([
