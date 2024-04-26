@@ -18,6 +18,38 @@ class PhotoController extends Controller
         return PhotoResource::collection($photos);
     }
 
+    public function chart()
+{
+    // Mengambil semua foto dari database
+    $photos = Photo::all();
+
+    // Mengelompokkan data foto berdasarkan bulan pembuatan
+    $groupedData = $photos->groupBy(function ($photo) {
+        return $photo->created_at->format('M');
+    });
+
+    // Daftar bulan dan total foto per bulan
+    $months = [
+        'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    $photoData = array_fill_keys($months, 0);
+
+    // Menghitung jumlah foto per bulan dan total foto
+    $totalPhotoAllMonths = 0;
+    foreach ($groupedData as $month => $data) {
+        $totalPhoto = count($data);
+        $photoData[$month] = $totalPhoto;
+        $totalPhotoAllMonths += $totalPhoto;
+    }
+
+    // Menambahkan total foto semua bulan
+    $photoData['total'] = $totalPhotoAllMonths;
+
+    return $photoData;
+}
+
+
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -115,10 +147,6 @@ class PhotoController extends Controller
 
     public function destroy(Photo $photo)
     {
-        if ($photo->image && File::exists(public_path('images/' . $photo->image))) {
-            File::delete(public_path('images/' . $photo->image));
-        }
-
         $photo->tags()->detach();
         $photo->collections()->detach();
         $photo->delete();

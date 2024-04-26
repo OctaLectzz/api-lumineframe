@@ -43,6 +43,7 @@ Route::prefix('dashboard')->middleware(['auth:sanctum', 'admin'])->group(functio
     Route::get('/category', [CategoryController::class, 'index']);
     Route::get('/tag', [TagController::class, 'index']);
     Route::get('/photo', [PhotoController::class, 'index']);
+    Route::get('/photo/chart', [PhotoController::class, 'chart']);
     Route::get('/like', [LikeController::class, 'index']);
     Route::get('/comment', [CommentController::class, 'index']);
     Route::get('/collection', [CollectionController::class, 'index']);
