@@ -38,7 +38,7 @@ class AuthController extends Controller
 
         // Avatar
         if ($request->hasFile('avatar')) {
-            $avatarName = time() . '-' . auth()->id() . '_' . $request->avatar->getClientOriginalExtension();
+            $avatarName = time() . '-' . auth()->id() . '.' . $request->avatar->getClientOriginalExtension();
             $request->avatar->move(public_path('avatars'), $avatarName);
             $input['avatar'] = $avatarName;
         }

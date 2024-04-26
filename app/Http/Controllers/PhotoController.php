@@ -33,7 +33,7 @@ class PhotoController extends Controller
 
         // Image
         if ($request->hasFile('image')) {
-            $imageName = time() . '-' . auth()->user()->username . '_' . $data['photo_number'] . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . auth()->user()->username . '_' . $data['photo_number'] . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images'), $imageName);
             $data['image'] = $imageName;
         }
@@ -86,7 +86,7 @@ class PhotoController extends Controller
                 unlink(public_path('images/' . $photo->image));
             }
 
-            $imageName = time() . '-' . auth()->user()->username . '_' . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . auth()->user()->username . '_' . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images'), $imageName);
             $data['image'] = $imageName;
         }
@@ -119,7 +119,8 @@ class PhotoController extends Controller
             File::delete(public_path('images/' . $photo->image));
         }
 
-        $photo->detach();
+        $photo->tags()->detach();
+        $photo->collections()->detach();
         $photo->delete();
 
         return response()->json([
@@ -127,6 +128,7 @@ class PhotoController extends Controller
             'message' => 'Photo Deleted Successfully'
         ]);
     }
+
 
     public function download($imageFilename)
     {

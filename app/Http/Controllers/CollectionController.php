@@ -63,7 +63,7 @@ class CollectionController extends Controller
 
     public function destroy(Collection $collection)
     {
-        $collection->detach();
+        $collection->photos()->detach();
         $collection->delete();
 
         return response()->json([

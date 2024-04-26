@@ -27,7 +27,7 @@ class CategoryController extends Controller
 
         // Image
         if ($request->hasFile('image')) {
-            $imageName = time() . '-' . $data['category_code'] . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . $data['category_code'] . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('categories'), $imageName);
             $data['image'] = $imageName;
         }
@@ -61,7 +61,7 @@ class CategoryController extends Controller
                 unlink(public_path('categories/' . $category->image));
             }
 
-            $imageName = time() . '-' . $data['category_code'] . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . $data['category_code'] . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('categories'), $imageName);
             $data['image'] = $imageName;
         }
