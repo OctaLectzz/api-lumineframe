@@ -12,14 +12,18 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        // Test Account
+        // Admin Account
         User::create([
-            'username' => 'admin',
-            'first_name' => 'Admin',
+            'username' => 'lumineadmin',
+            'first_name' => 'Lumine',
             'last_name' => 'Admin',
-            'email' => 'admin@test.com',
-            'password' => bcrypt('password'),
+            'email' => 'admin@lumine.com',
+            'password' => bcrypt('lumine04'),
             'role' => 'Admin',
+            'about' => 'This is the LumineFrame admin account',
+            'phone' => '089690220404',
+            'url' => 'https://lumineframe.com',
+            'status' => 1
         ]);
 
         // My Account
