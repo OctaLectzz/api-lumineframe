@@ -96,14 +96,10 @@ class UserController extends Controller
     public function updateavatar(Request $request, User $user)
     {
         $data = $request->validate([
-            'avatar' => 'required|image'
+            'avatar' => 'required|image|mimes:jpeg,png,jpg'
         ]);
 
         if ($request->hasFile('avatar')) {
-            if ($user->avatar && file_exists(public_path('avatars/' . $user->avatar))) {
-                unlink(public_path('avatars/' . $user->avatar));
-            }
-
             $avatarName = time() . '-' . auth()->user()->username . '.' . $request->avatar->getClientOriginalExtension();
             $request->avatar->move(public_path('avatars'), $avatarName);
             $data['avatar'] = $avatarName;

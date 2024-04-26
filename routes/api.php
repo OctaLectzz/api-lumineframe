@@ -56,7 +56,7 @@ Route::prefix('user')->controller(UserController::class)->group(function () {
     Route::get('/{user:username}', 'show');
     Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{user}', 'update');
-    Route::patch('/avatar/{user}', 'updateavatar');
+    Route::post('/avatar/{user}', 'updateavatar')->middleware('auth:sanctum');
     Route::delete('/{user}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
 
@@ -65,7 +65,7 @@ Route::prefix('category')->controller(CategoryController::class)->group(function
     Route::get('/', 'index');
     Route::get('/{category:category_code}', 'show');
     Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
-    Route::put('/{category}', 'update')->middleware(['auth:sanctum', 'admin']);
+    Route::post('/{category}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{category}', 'destroy')->middleware(['auth:sanctum', 'admin']);
 });
 

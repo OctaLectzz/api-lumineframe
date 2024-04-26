@@ -51,17 +51,14 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
+            'image' => 'nullable|image|mimes:jpeg,png,jpg',
             'name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255'
         ]);
 
         // Image
         if ($request->hasFile('image')) {
-            if ($category->image && file_exists(public_path('categories/' . $category->image))) {
-                unlink(public_path('categories/' . $category->image));
-            }
-
-            $imageName = time() . '-' . $data['category_code'] . '.' . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . $request->category_code . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('categories'), $imageName);
             $data['image'] = $imageName;
         }
