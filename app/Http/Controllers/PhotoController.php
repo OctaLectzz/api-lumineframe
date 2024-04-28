@@ -53,7 +53,7 @@ class PhotoController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg',
+            'image' => 'required|image',
             'title' => 'nullable|string|max:20',
             'description' => 'nullable|string|max:255',
             'category_id' => 'nullable|exists:categories,id',
@@ -118,7 +118,7 @@ class PhotoController extends Controller
                 unlink(public_path('images/' . $photo->image));
             }
 
-            $imageName = time() . '-' . auth()->user()->username . '_' . '.' . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . auth()->user()->username . '_' . $photo->photo_number . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('images'), $imageName);
             $data['image'] = $imageName;
         }

@@ -19,7 +19,7 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'image' => 'required|image|mimes:jpeg,png,jpg',
+            'image' => 'required|image',
             'name' => 'required|string|unique:categories|max:50',
             'description' => 'nullable|string|max:255'
         ]);
@@ -51,14 +51,14 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $data = $request->validate([
-            'image' => 'nullable|image|mimes:jpeg,png,jpg',
+            'image' => 'nullable',
             'name' => 'required|string|max:50',
             'description' => 'nullable|string|max:255'
         ]);
 
         // Image
         if ($request->hasFile('image')) {
-            $imageName = time() . '-' . $request->category_code . '.' . $request->image->getClientOriginalExtension();
+            $imageName = time() . '-' . $category->category_code . '.' . $request->image->getClientOriginalExtension();
             $request->image->move(public_path('categories'), $imageName);
             $data['image'] = $imageName;
         }
