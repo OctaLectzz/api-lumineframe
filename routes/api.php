@@ -95,7 +95,7 @@ Route::prefix('like')->controller(LikeController::class)->group(function () {
     Route::post('/', 'store')->middleware(['auth:sanctum', 'admin']);
     Route::put('/{like}', 'update')->middleware(['auth:sanctum', 'admin']);
     Route::delete('/{like}', 'destroy')->middleware(['auth:sanctum', 'admin']);
-    Route::get('/user/{id}', 'userlike')->middleware('auth:sanctum');
+    Route::get('/user/{id}', 'userlike');
     Route::put('/photo/{id}', 'like')->middleware('auth:sanctum');
     Route::delete('/photo/{id}', 'dislike')->middleware('auth:sanctum');
 });
@@ -125,5 +125,5 @@ Route::prefix('collectionphoto')->controller(CollectionPhotoController::class)->
     Route::post('/', 'store')->middleware('auth:sanctum');
     Route::put('/{collectionphoto}', 'update')->middleware('auth:sanctum');
     Route::delete('/{collectionphoto}', 'destroy')->middleware('auth:sanctum');
-    Route::get('/user/{id}', 'usersave')->middleware('auth:sanctum');
+    Route::get('/user/{id}', 'usersave');
 });

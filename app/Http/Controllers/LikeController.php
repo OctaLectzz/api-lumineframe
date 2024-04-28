@@ -66,9 +66,9 @@ class LikeController extends Controller
         ]);
     }
 
-    public function userlike()
+    public function userlike($id)
     {
-        $likes = Like::with('photo')->where('user_id', auth()->id())->get();
+        $likes = Like::with('photo')->where('user_id', $id)->get();
 
         $photos = [];
         foreach ($likes as $like) {
